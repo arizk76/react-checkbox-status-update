@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 function TestFuncComp() {
-  let onlySelectedList = [];
-  let initialSelectionList = [
+  const initialSelectionList = [
     {
       id: 1,
       name: "option1",
@@ -31,24 +30,25 @@ function TestFuncComp() {
   ];
 
   const [selectionList, setSelectionList] = useState(initialSelectionList);
-  const [onlySelected, setOnlySelected] = useState([]);
+  const [onlySelectedList, setOnlySelectedList] = useState([]);
 
   const handleChecked = (evt) => {
-    let optionName = evt.target.value;
-    let optionSelectionStatus = evt.target.checked;
+    const selectedOptionName = evt.target.value;
+    const selectedOptionStatus = evt.target.checked;
 
-    let updatedSelectionList = selectionList;
-    updatedSelectionList.find((option) => {
-      if (option.name === optionName) {
-        option.selected = optionSelectionStatus;
+    let updatedSelectionList = [...selectionList];
+    let updatedOnlySelectedList = [];
+    updatedSelectionList.forEach((item) => {
+      if (item.name === selectedOptionName) {
+        item.selected = selectedOptionStatus;
       }
-      onlySelectedList = updatedSelectionList.filter(
+
+      updatedOnlySelectedList = updatedSelectionList.filter(
         (item) => item.selected === true
       );
 
       setSelectionList(updatedSelectionList);
-      setOnlySelected(onlySelectedList);
-      return setOnlySelected(onlySelectedList);
+      setOnlySelectedList(updatedOnlySelectedList);
     });
   };
 
@@ -76,10 +76,8 @@ function TestFuncComp() {
       <br />
       <h3>Only Selected List</h3>
       <ul style={{ listStyleType: "none" }}>
-        {onlySelected.map((option) => {
-          if (option.selected) {
-            return <li key={option.id}>{option.name}</li>;
-          }
+        {onlySelectedList.map((option) => {
+          return <li key={option.id}>{option.name}</li>;
         })}
       </ul>
     </div>
