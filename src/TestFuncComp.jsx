@@ -1,33 +1,8 @@
 import React, { useState } from "react";
+import { userSelectionOptions } from "./userSelectionOptionsList";
 
 function TestFuncComp() {
-  const initialSelectionList = [
-    {
-      id: 1,
-      name: "option1",
-      selected: false
-    },
-    {
-      id: 2,
-      name: "option2",
-      selected: false
-    },
-    {
-      id: 3,
-      name: "option3",
-      selected: false
-    },
-    {
-      id: 4,
-      name: "option4",
-      selected: false
-    },
-    {
-      id: 5,
-      name: "option5",
-      selected: false
-    }
-  ];
+  const initialSelectionList = [...userSelectionOptions];
 
   const [selectionList, setSelectionList] = useState(initialSelectionList);
   const [onlySelectedList, setOnlySelectedList] = useState([]);
@@ -36,50 +11,51 @@ function TestFuncComp() {
     const selectedOptionName = evt.target.value;
     const selectedOptionStatus = evt.target.checked;
 
-    let updatedSelectionList = [...selectionList];
+    const updatedSelectionList = [...selectionList];
     let updatedOnlySelectedList = [];
     updatedSelectionList.forEach((item) => {
       if (item.name === selectedOptionName) {
         item.selected = selectedOptionStatus;
       }
-
-      updatedOnlySelectedList = updatedSelectionList.filter(
-        (item) => item.selected === true
-      );
-
-      setSelectionList(updatedSelectionList);
-      setOnlySelectedList(updatedOnlySelectedList);
     });
+    updatedOnlySelectedList = updatedSelectionList.filter(
+      (item) => item.selected === true
+    );
+
+    setSelectionList(updatedSelectionList);
+    setOnlySelectedList(updatedOnlySelectedList);
   };
 
   return (
     <div>
-      <h1> Test scenario using React function component </h1>
-      <p>
-        Select from options list, State will be updated using setState() hook
-      </p>
-      <p>and only selected options will be updated and rendered below </p>
-
-      {selectionList.map((item) => {
-        return (
-          <div key={item.id}>
-            <label>{item.name}</label>
+      <h1 className="title">
+        Test scenario 2 <span> Function component</span>
+      </h1>
+      <code>USING: </code>
+      <code>useState() Hook </code>
+      <h3>User Selection Options</h3>
+      <div className="selection-options">
+        {selectionList.map((item) => (
+          <label key={item.id}>
+            {item.name}
             <input
               type="checkbox"
               name={item.name}
               value={item.name}
               onChange={handleChecked}
             />
-          </div>
-        );
-      })}
+          </label>
+        ))}
+      </div>
       <br />
       <h3>Only Selected List</h3>
-      <ul style={{ listStyleType: "none" }}>
-        {onlySelectedList.map((option) => {
-          return <li key={option.id}>{option.name}</li>;
-        })}
-      </ul>
+      <div className="only-selected">
+        <ul>
+          {onlySelectedList.map((option) => (
+            <li key={option.id}>{option.name}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
