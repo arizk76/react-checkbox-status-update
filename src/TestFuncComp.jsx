@@ -60,25 +60,23 @@ function TestFuncComp() {
       </p>
       <p>and only selected options will be updated and rendered below </p>
 
-      {selectionList.map((item) => {
-        return (
-          <div key={item.id}>
-            <label>{item.name}</label>
-            <input
-              type="checkbox"
-              name={item.name}
-              value={item.name}
-              onChange={handleChecked}
-            />
-          </div>
-        );
-      })}
+      {selectionList.map((item) => (
+        <div key={item.id}>
+          <label>{item.name}</label>
+          <input
+            type="checkbox"
+            name={item.name}
+            value={item.name}
+            onChange={handleChecked}
+          />
+        </div>
+      ))}
       <br />
       <h3>Only Selected List</h3>
       <ul style={{ listStyleType: "none" }}>
-        {onlySelectedList.map((option) => {
-          return <li key={option.id}>{option.name}</li>;
-        })}
+        {onlySelectedList.map((option) => (
+          <li key={option.id}>{option.name}</li>
+        ))}
       </ul>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class TestClassComp extends Component {
   constructor(props) {
@@ -8,58 +8,56 @@ export default class TestClassComp extends Component {
       selectionList: [
         {
           id: 1,
-          name: 'option1',
-          selected: false,
+          name: "option1",
+          selected: false
         },
         {
           id: 2,
-          name: 'option2',
-          selected: false,
+          name: "option2",
+          selected: false
         },
         {
           id: 3,
-          name: 'option3',
-          selected: false,
+          name: "option3",
+          selected: false
         },
         {
           id: 4,
-          name: 'option4',
-          selected: false,
+          name: "option4",
+          selected: false
         },
         {
           id: 5,
-          name: 'option5',
-          selected: false,
-        },
+          name: "option5",
+          selected: false
+        }
       ],
-      onlySelectedList: [],
+      onlySelectedList: []
     };
     this.handleSelection = this.handleSelection.bind(this);
   }
 
   handleSelection(evt) {
-    let optionName = evt.target.value;
-    let optionSelectionStatus = evt.target.checked;
+    const optionName = evt.target.value;
+    const optionSelectionStatus = evt.target.checked;
 
-    let updatedSelectionList = this.state.selectionList;
-    let onlySelected = this.state.onlySelectedList;
+    let updatedSelectionList = [...this.state.selectionList];
+    let updatedOnlySelected = [...this.state.onlySelectedList];
 
-    updatedSelectionList.find((option) => {
+    updatedSelectionList.forEach((option) => {
       if (option.name === optionName) {
         option.selected = optionSelectionStatus;
       }
-      onlySelected = updatedSelectionList.filter(
-        (item) => item.selected === true
-      );
+    });
+    updatedOnlySelected = updatedSelectionList.filter(
+      (item) => item.selected === true
+    );
+    this.setState({
+      selectionList: updatedSelectionList
     });
     this.setState({
-      selectionList: updatedSelectionList,
+      onlySelectedList: updatedOnlySelected
     });
-    this.setState({
-      onlySelectedList: onlySelected,
-    });
-
-    console.log(this.state.selectionList);
   }
 
   render() {
@@ -76,7 +74,7 @@ export default class TestClassComp extends Component {
             <div key={item.id}>
               <label>{item.name}</label>
               <input
-                type='checkbox'
+                type="checkbox"
                 name={item.name}
                 value={item.name}
                 onChange={(evt) => this.handleSelection(evt)}
@@ -86,12 +84,10 @@ export default class TestClassComp extends Component {
         })}
         <br />
         <h3>Only Selected List</h3>
-        <ul style={{ listStyleType: 'none' }}>
-          {this.state.onlySelectedList.map((option) => {
-            if (option.selected) {
-              return <li key={option.id}>{option.name}</li>;
-            }
-          })}
+        <ul style={{ listStyleType: "none" }}>
+          {this.state.onlySelectedList.map((option) => (
+            <li key={option.id}>{option.name}</li>
+          ))}
         </ul>
       </div>
     );
